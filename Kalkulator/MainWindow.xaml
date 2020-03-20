@@ -18,7 +18,7 @@
 
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="0.5*" />
+            <RowDefinition Height="0.7*" />
             <RowDefinition Height="1*" />
             <RowDefinition Height="0.5*" />
             <RowDefinition Height="1*" />
@@ -27,8 +27,8 @@
             <RowDefinition Height="1*" />
             <RowDefinition Height="1*" />
         </Grid.RowDefinitions>
-        <Label x:Name="LabelWypisz" Grid.Row="0" Grid.ColumnSpan="4" HorizontalAlignment="Center" VerticalAlignment="Center"  Width="360" Margin="10" Height="30" Content=""  />
-        <TextBox x:Name="textBoxEkran" Grid.Row="1" Grid.ColumnSpan="4" HorizontalAlignment="Center" VerticalAlignment="Center"  Width="380" Height="60" FontSize="16" Text="" TextAlignment="Right" TextWrapping="Wrap"  />
+        <TextBox x:Name="LabelWypisz" Grid.Row="0" Grid.ColumnSpan="4" Text="" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.CanContentScroll="True" IsReadOnly="True" Margin="5 15 5 3" BorderBrush="LightGray" />
+        <TextBox x:Name="textBoxEkran" Grid.Row="1" Grid.ColumnSpan="4" HorizontalAlignment="Center" VerticalAlignment="Center"  Width="380" Height="60" FontSize="16" Text="" TextAlignment="Right" TextWrapping="Wrap" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.CanContentScroll="True" />
         <Label x:Name="LabelBlad" Grid.Row="2" Grid.ColumnSpan="4" HorizontalAlignment="Center" VerticalAlignment="Center"  Width="360" Margin="10" Height="30" Content="" />
 
         <Button x:Name="ButtonC"  Grid.Column="0" Grid.Row="3" Content="C" FontSize="18" Click="ButtonC_Click"/>
@@ -52,7 +52,7 @@
         <Button x:Name="ButtonDodac"  Grid.Column="3" Grid.Row="6" Content="+" FontSize="18" Click="buttonDzialania_Click" />
 
         <Button x:Name="ButtonWynik"  Grid.Column="2" Grid.ColumnSpan="2" Grid.Row="7" Content="=" FontSize="18" Click="ButtonWynik_Click" />
-        
-        <Button x:Name="ButtonKropka"  Grid.Column="0" Grid.Row="7" Content="." FontSize="18" Click="ButtonKropka_Click"/>
+
+        <Button x:Name="ButtonPrzecinek"  Grid.Column="0" Grid.Row="7" Content="," FontSize="18" Click="ButtonPrzecinek_Click"/>
     </Grid>
 </Window>

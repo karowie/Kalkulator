@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Microsoft.SqlServer.Server;
+using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,6 +22,7 @@ namespace Kalkulator
     /// </summary>
     public partial class MainWindow : Window
     {
+        System.Globalization.CultureInfo EnglishCulture = new System.Globalization.CultureInfo("en-EN");
         // Lista przechowująca liczby do obliczeń
         private List<Double> liczby = new List<Double>();
         // Lista przechowująca znaki do obliczeń
@@ -30,6 +33,8 @@ namespace Kalkulator
         public MainWindow()
         {
             InitializeComponent();
+            
+
         }
 
         // Funkcja dopisująca po wpisaniu
@@ -38,9 +43,11 @@ namespace Kalkulator
             LabelBlad.Content = "";
             var button = sender as Button;
             // Zabezpieczenie przed wpisaniem liczby typu 06 lub -06
-            if((textBoxEkran.Text.Equals("0"))||(textBoxEkran.Text.Equals("-0")))
-                if(!button.Content.ToString().Equals("0"))
+            if ((textBoxEkran.Text.Equals("0")) || (textBoxEkran.Text.Equals("-0")))
+            {
+                if (!button.Content.ToString().Equals("0"))
                     textBoxEkran.Text = button.Content.ToString();
+            }
             else
                 textBoxEkran.Text += button.Content.ToString();            
         }
@@ -51,12 +58,12 @@ namespace Kalkulator
             var button = sender as Button;
 
             //sprząta po starych działaniach
-            if ((!(LabelWypisz.Content.ToString().Equals(""))) && (LabelWypisz.Content.ToString().Last() == '='))
-                LabelWypisz.Content = "";
+            if ((!(LabelWypisz.Text.ToString().Equals(""))) && (LabelWypisz.Text.ToString().Last() == '='))
+                LabelWypisz.Text = "";
 
             if (!textBoxEkran.Text.Equals(""))
             {
-                if ((!(LabelWypisz.Content.ToString().Equals("")))&&(LabelWypisz.Content.ToString().Last() == '/'))
+                if ((!(LabelWypisz.Text.ToString().Equals("")))&&(LabelWypisz.Text.ToString().Last() == '/'))
                 {
                     if (textBoxEkran.Text == "0")
                     {
@@ -73,13 +80,13 @@ namespace Kalkulator
                         {
                             try
                             {
-                                liczby.Add(Double.Parse(textBoxEkran.Text, System.Globalization.CultureInfo.InvariantCulture));
-                                LabelWypisz.Content += "(" + liczby.Last() + ")" + button.Content.ToString();
+                                liczby.Add(Double.Parse(textBoxEkran.Text));
+                                LabelWypisz.Text += "(" + liczby.Last() + ")" + button.Content.ToString();
                             }
                             catch
                             {
                                 liczby.Add(1);
-                                LabelWypisz.Content += 1 + button.Content.ToString();
+                                LabelWypisz.Text += 1 + button.Content.ToString();
                                 LabelBlad.Content = "Błędne dane. Wstawiam 1!";
                             }
                             dzialania.Add(Convert.ToChar(button.Content.ToString()));
@@ -89,13 +96,13 @@ namespace Kalkulator
                         {
                             try
                             {
-                                liczby.Add(Double.Parse(textBoxEkran.Text, System.Globalization.CultureInfo.InvariantCulture));
-                                LabelWypisz.Content += liczby.Last() + button.Content.ToString();
+                                liczby.Add(Double.Parse(textBoxEkran.Text));
+                                LabelWypisz.Text += liczby.Last() + button.Content.ToString();
                             }
                             catch
                             {
                                 liczby.Add(1);
-                                LabelWypisz.Content += 1 + button.Content.ToString();
+                                LabelWypisz.Text += 1 + button.Content.ToString();
                                 LabelBlad.Content = "Błędne dane. Wstawiam 1!";
 
                             }
@@ -113,13 +120,13 @@ namespace Kalkulator
                     {
                         try
                         {
-                            liczby.Add(Double.Parse(textBoxEkran.Text, System.Globalization.CultureInfo.InvariantCulture));
-                            LabelWypisz.Content += "(" + liczby.Last() + ")" + button.Content.ToString();
+                            liczby.Add(Double.Parse(textBoxEkran.Text));
+                            LabelWypisz.Text += "(" + liczby.Last() + ")" + button.Content.ToString();
                         }
                         catch
                         {
                             liczby.Add(1);
-                            LabelWypisz.Content += 1 + button.Content.ToString();
+                            LabelWypisz.Text += 1 + button.Content.ToString();
                             textBoxEkran.Text = "";
 
                         }
@@ -130,13 +137,13 @@ namespace Kalkulator
                     {
                         try
                         {
-                            liczby.Add(Double.Parse(textBoxEkran.Text, System.Globalization.CultureInfo.InvariantCulture));
-                            LabelWypisz.Content += liczby.Last() + button.Content.ToString();
+                            liczby.Add(Double.Parse(textBoxEkran.Text));
+                            LabelWypisz.Text += liczby.Last() + button.Content.ToString();
                         }
                         catch
                         {
                             liczby.Add(1);
-                            LabelWypisz.Content += 1 + button.Content.ToString();
+                            LabelWypisz.Text += 1 + button.Content.ToString();
                             LabelBlad.Content = "Błędne dane. Wstawiam 1!";
                         }
                         
@@ -149,20 +156,26 @@ namespace Kalkulator
                 textBoxEkran.Text = "-"; 
         }
 
-        //Funkcja działająca po wciśnięciu kropki
-        private void ButtonKropka_Click(object sender, RoutedEventArgs e)
+        //Funkcja działająca po wciśnięciu przecinka
+        private void ButtonPrzecinek_Click(object sender, RoutedEventArgs e)
         {
             LabelBlad.Content = "";
             if (!textBoxEkran.Text.Equals(""))
             {
-                if (!textBoxEkran.Text.Equals("-"))
-                    if (!textBoxEkran.Text.Contains("."))
-                        textBoxEkran.Text += ".";
-                else //Gdy na początku jest -, zrób -0.
-                    textBoxEkran.Text += "0.";
+                if (!textBoxEkran.Text.Contains(","))
+                {
+                    if (!textBoxEkran.Text.Equals("-"))
+                    {
+                        textBoxEkran.Text += ",";
+                    }
+                    else //Gdy na początku jest -, zrób -0.
+                    {
+                        textBoxEkran.Text += "0,";
+                    }
+                }
             }
             else //Gdy puste pole zrób 0.
-                textBoxEkran.Text += "0.";
+                textBoxEkran.Text += "0,";
         }
 
         //Usuwanie aktualnie wprowadzanej wartości
@@ -177,12 +190,12 @@ namespace Kalkulator
         {
             LabelBlad.Content = "";
             textBoxEkran.Text = "";
-            LabelWypisz.Content = "";
+            LabelWypisz.Text = "";
             liczby = new List<double>();
             dzialania = new List<char>();
         }
 
-        //Usuwanie pojedynczego znaku
+        //Usuwanie pojedynczego znak
         private void ButtonUsun_Click(object sender, RoutedEventArgs e)
         {
             LabelBlad.Content = "";
@@ -192,32 +205,39 @@ namespace Kalkulator
 
         private void ButtonWynik_Click(object sender, RoutedEventArgs e)
         {
+            var button = sender as Button;
             Boolean przerwij = false;
             LabelBlad.Content = "";
-            if(LabelWypisz.Content.ToString().Contains('='))
-                LabelWypisz.Content = "";
+            if(LabelWypisz.Text.Contains('='))
+                LabelWypisz.Text = "";
 
-            if ((!textBoxEkran.Text.Equals("")) || (!textBoxEkran.Text.Equals("-")))
+            if ((textBoxEkran.Text.Equals(""))&&((LabelWypisz.Text.EndsWith("-"))|| (LabelWypisz.Text.EndsWith("+"))|| (LabelWypisz.Text.EndsWith("/")) || (LabelWypisz.Text.EndsWith("*"))))
             {
-                var button = sender as Button;
+                LabelWypisz.Text = LabelWypisz.Text.Remove(LabelWypisz.Text.Length - 1);
+                LabelWypisz.Text += button.Content.ToString();
+                dzialania.RemoveAt(dzialania.Count-1);
+            }
+
+            if ((!textBoxEkran.Text.Equals("")))
+            {
                 try
                 {
-                    liczby.Add(Double.Parse(textBoxEkran.Text, System.Globalization.CultureInfo.InvariantCulture));
+                    liczby.Add(Double.Parse(textBoxEkran.Text));
                     if (textBoxEkran.Text.StartsWith("-"))
-                        LabelWypisz.Content += "(" + liczby.Last() + ")" + button.Content.ToString();
+                        LabelWypisz.Text += "(" + liczby.Last() + ")" + button.Content.ToString();
                     else
-                        LabelWypisz.Content += liczby.Last() + button.Content.ToString();
+                        LabelWypisz.Text += liczby.Last() + button.Content.ToString();
                 }
                 catch
                 {
                     liczby.Add(1);
-                    LabelWypisz.Content += 1 + button.Content.ToString();
+                    LabelWypisz.Text += 1 + button.Content.ToString();
                     LabelBlad.Content = "Błędne dane. Wstawiam 1!";
                 }
-                
-                
+
                 textBoxEkran.Text = "";
-                if (!LabelWypisz.Content.ToString().Equals(""))
+            }
+                if (!LabelWypisz.Text.ToString().Equals(""))
                 {
                     wynik = liczby[0];
                     if (dzialania.Count > 0)
@@ -298,7 +318,7 @@ namespace Kalkulator
                     liczby = new List<double>();
                     dzialania = new List<char>();
                 }
-            }
+            //}
             
         }
 
