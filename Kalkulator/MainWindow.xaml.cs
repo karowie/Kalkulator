@@ -1,7 +1,6 @@
 ﻿using Microsoft.SqlServer.Server;
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,7 +21,6 @@ namespace Kalkulator
     /// </summary>
     public partial class MainWindow : Window
     {
-        System.Globalization.CultureInfo EnglishCulture = new System.Globalization.CultureInfo("en-EN");
         // Lista przechowująca liczby do obliczeń
         private List<Double> liczby = new List<Double>();
         // Lista przechowująca znaki do obliczeń
@@ -33,8 +31,6 @@ namespace Kalkulator
         public MainWindow()
         {
             InitializeComponent();
-            
-
         }
 
         // Funkcja dopisująca po wpisaniu
@@ -42,14 +38,25 @@ namespace Kalkulator
         {
             LabelBlad.Content = "";
             var button = sender as Button;
-            // Zabezpieczenie przed wpisaniem liczby typu 06 lub -06
-            if ((textBoxEkran.Text.Equals("0")) || (textBoxEkran.Text.Equals("-0")))
+            
+            if(LabelWypisz.Text.Contains("="))
             {
-                if (!button.Content.ToString().Equals("0"))
-                    textBoxEkran.Text = button.Content.ToString();
+                LabelWypisz.Text = "";
+                textBoxEkran.Text = button.Content.ToString();
+
             }
             else
-                textBoxEkran.Text += button.Content.ToString();            
+            {
+                // Zabezpieczenie przed wpisaniem liczby typu 06 lub -06
+                if ((textBoxEkran.Text.Equals("0")) || (textBoxEkran.Text.Equals("-0")))
+                {
+                    if (!button.Content.ToString().Equals("0"))
+                        textBoxEkran.Text = button.Content.ToString();
+                }
+                else
+                    textBoxEkran.Text += button.Content.ToString();
+            }
+                     
         }
 
         private void buttonDzialania_Click(object sender, RoutedEventArgs e)
@@ -58,12 +65,12 @@ namespace Kalkulator
             var button = sender as Button;
 
             //sprząta po starych działaniach
-            if ((!(LabelWypisz.Text.ToString().Equals(""))) && (LabelWypisz.Text.ToString().Last() == '='))
+            if ((!(LabelWypisz.Text.Equals(""))) && (LabelWypisz.Text.Last() == '='))
                 LabelWypisz.Text = "";
 
             if (!textBoxEkran.Text.Equals(""))
             {
-                if ((!(LabelWypisz.Text.ToString().Equals("")))&&(LabelWypisz.Text.ToString().Last() == '/'))
+                if ((!(LabelWypisz.Text.Equals("")))&&(LabelWypisz.Text.Last() == '/'))
                 {
                     if (textBoxEkran.Text == "0")
                     {
@@ -160,6 +167,11 @@ namespace Kalkulator
         private void ButtonPrzecinek_Click(object sender, RoutedEventArgs e)
         {
             LabelBlad.Content = "";
+            if (LabelWypisz.Text.Contains("="))
+            {
+                LabelWypisz.Text = "";
+                textBoxEkran.Text = "";
+            }
             if (!textBoxEkran.Text.Equals(""))
             {
                 if (!textBoxEkran.Text.Contains(","))
@@ -237,7 +249,7 @@ namespace Kalkulator
 
                 textBoxEkran.Text = "";
             }
-                if (!LabelWypisz.Text.ToString().Equals(""))
+                if (!LabelWypisz.Text.Equals(""))
                 {
                     wynik = liczby[0];
                     if (dzialania.Count > 0)
