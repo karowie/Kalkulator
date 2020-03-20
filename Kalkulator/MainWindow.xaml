@@ -1,0 +1,58 @@
+﻿<Window x:Class="Kalkulator.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Kalkulator"
+        mc:Ignorable="d"
+        Title="Kalkulator" Height="600" Width="400"
+        ResizeMode="CanMinimize"
+        >
+        
+    <Grid  Background="LightGray">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0.5*" />
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="0.5*" />
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="1*" />
+        </Grid.RowDefinitions>
+        <Label x:Name="LabelWypisz" Grid.Row="0" Grid.ColumnSpan="4" HorizontalAlignment="Center" VerticalAlignment="Center"  Width="360" Margin="10" Height="30" Content=""  />
+        <TextBox x:Name="textBoxEkran" Grid.Row="1" Grid.ColumnSpan="4" HorizontalAlignment="Center" VerticalAlignment="Center"  Width="380" Height="60" FontSize="16" Text="" TextAlignment="Right" TextWrapping="Wrap"  />
+        <Label x:Name="LabelBlad" Grid.Row="2" Grid.ColumnSpan="4" HorizontalAlignment="Center" VerticalAlignment="Center"  Width="360" Margin="10" Height="30" Content="" />
+
+        <Button x:Name="ButtonC"  Grid.Column="0" Grid.Row="3" Content="C" FontSize="18" Click="ButtonC_Click"/>
+        <Button x:Name="ButtonCE"  Grid.Column="1" Grid.Row="3" Content="CE" FontSize="18" Click="ButtonCE_Click"/>
+        <Button x:Name="ButtonUsun"  Grid.Column="2" Grid.Row="3" Content="X" FontSize="18" Click="ButtonUsun_Click"/>
+
+        <Button x:Name="Button7"  Grid.Column="0" Grid.Row="4" Content="7" FontSize="18" Click="buttonNumery_Click" />
+        <Button x:Name="Button8"  Grid.Column="1" Grid.Row="4" Content="8" FontSize="18" Click="buttonNumery_Click" />
+        <Button x:Name="Button9"  Grid.Column="2" Grid.Row="4" Content="9" FontSize="18" Click="buttonNumery_Click"  />
+        <Button x:Name="Button4"  Grid.Column="0" Grid.Row="5" Content="4" FontSize="18" Click="buttonNumery_Click" />
+        <Button x:Name="Button5"  Grid.Column="1" Grid.Row="5" Content="5" FontSize="18" Click="buttonNumery_Click" />
+        <Button x:Name="Button6"  Grid.Column="2" Grid.Row="5" Content="6" FontSize="18" Click="buttonNumery_Click" />
+        <Button x:Name="Button1"  Grid.Column="0" Grid.Row="6" Content="1" FontSize="18" Click="buttonNumery_Click" />
+        <Button x:Name="Button2"  Grid.Column="1" Grid.Row="6" Content="2" FontSize="18" Click="buttonNumery_Click" />
+        <Button x:Name="Button3"  Grid.Column="2" Grid.Row="6" Content="3" FontSize="18" Click="buttonNumery_Click" />
+        <Button x:Name="Button0"  Grid.Column="1" Grid.Row="7" Content="0" FontSize="18" Click="buttonNumery_Click" />
+
+        <Button x:Name="ButtonPodzielic"  Grid.Column="3" Grid.Row="3" Content="/" FontSize="18" Click="buttonDzialania_Click" />
+        <Button x:Name="ButtonPomnozyc"  Grid.Column="3" Grid.Row="4" Content="*" FontSize="18" Click="buttonDzialania_Click" />
+        <Button x:Name="ButtonOdjac"  Grid.Column="3" Grid.Row="5" Content="-" FontSize="18" Click="buttonDzialania_Click" />
+        <Button x:Name="ButtonDodac"  Grid.Column="3" Grid.Row="6" Content="+" FontSize="18" Click="buttonDzialania_Click" />
+
+        <Button x:Name="ButtonWynik"  Grid.Column="2" Grid.ColumnSpan="2" Grid.Row="7" Content="=" FontSize="18" Click="ButtonWynik_Click" />
+        
+        <Button x:Name="ButtonKropka"  Grid.Column="0" Grid.Row="7" Content="." FontSize="18" Click="ButtonKropka_Click"/>
+    </Grid>
+</Window>
